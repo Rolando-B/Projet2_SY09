@@ -1,5 +1,6 @@
 library(e1071)
 library(MASS)
+library(fossil)
 source("functions/anadisc.R")
 source("functions/mvdnorm.R")
 source("functions/prob.ad.R")
