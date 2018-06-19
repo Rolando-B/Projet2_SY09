@@ -12,10 +12,13 @@ protocole2 = function (Xapp, zapp, quadraticVariables= NULL,N = 20){
     datafVal = cbind(splitData$Xval, Z=as.factor(splitData$zval))
     datafValVars = cbind(splitData$Xval[quadraticVariables], Z=as.factor(splitData$zval))
     
-    try({
+    tryCatch({
       paramsAdq = qda(splitData$Xapp, factor(splitData$zapp))
       resAdq = predict(paramsAdq,splitData$Xval)
       taux$adq[i] = 1 - rand.index(as.integer(resAdq$class),splitData$zval)
+    }
+    ,error = function(e) {
+      taux$adq[i] = 1
     })
     paramsAdqVars = qda(splitData$Xapp[quadraticVariables], factor(splitData$zapp))
     paramsAdl = lda(splitData$Xapp, splitData$zapp)
@@ -49,7 +52,7 @@ protocole2 = function (Xapp, zapp, quadraticVariables= NULL,N = 20){
   
   result = NULL
   result$taux = taux
-  result$mean = apply(taux, 2, mean)
-  result$sd = apply(taux, 2, sd)
+  result$mean = round(apply(taux, 2, mean),digits=2)
+  result$sd = round(apply(taux, 2, sd),digits=2)
   return(result)
 }
