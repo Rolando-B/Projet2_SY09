@@ -7,6 +7,7 @@ protocole2 = function (Xapp, zapp, quadraticVariables= NULL,N = 20){
   for (i in c(1:N)){
     
     splitData = separ1(Xapp,zapp)
+    
     datafApp = cbind(splitData$Xapp, Z=as.factor(splitData$zapp))
     datafAppVars = cbind(splitData$Xapp[quadraticVariables], Z=as.factor(splitData$zapp))
     datafVal = cbind(splitData$Xtst, Z=as.factor(splitData$ztst))
@@ -46,7 +47,7 @@ protocole2 = function (Xapp, zapp, quadraticVariables= NULL,N = 20){
   
   result = NULL
   result$taux = taux
-  result$mean = round(apply(taux, 2, mean),digits=2)
-  result$sd = round(apply(taux, 2, sd),digits=2)
+  result$mean = round(apply(taux, 2, function(x) mean(x[x>0])),digits=2)
+  result$sd = round(apply(taux, 2, function(x) sd(x[x>0])),digits=2)
   return(result)
 }

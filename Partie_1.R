@@ -1,7 +1,6 @@
 library(e1071)
 library(MASS)
 library(fossil)
-setwd("~/Documents/Drive/GI04/SY09/Projet_2")
 source("functions/anadisc.R")
 source("functions/mvdnorm.R")
 source("functions/prob.ad.R")
@@ -10,7 +9,6 @@ source("functions/prepare.R")
 source("functions/separ1.R")
 source("functions/check.normality.R")
 source("functions/distXY.R")
-source("functions/protocole.R")
 source("functions/protocole2.R")
 source("functions/logistic.R")
 source("functions/seeDensity.R")
@@ -82,7 +80,12 @@ covSonar <- cov(XappSonar)
 subCovSonar <- mean(check.cov(cbind(XappSonar,Z = zappSonar))$same)
 corSonar <- cor(XappSonar)
 
-normalitySonar <- check.normality(XappSonar)
+covSonarAcp <- cov(acpData)
+subCovSonarAcp <- mean(check.cov(cbind(acpData,Z = zappSonar))$same)
+corSonarAcp <- cor(acpData)
+
+normSonar <- check.normality(sonar)
+
 
 plot(prcomp(XappSonar)$x[,1], prcomp(XappSonar)$x[,2], col=c("red", "blue")[zappSonar])
 
@@ -91,8 +94,21 @@ plot(prcomp(XappSonar)$x[,1], prcomp(XappSonar)$x[,2], col=c("red", "blue")[zapp
 spam <- read.csv("data/spambase.csv", header=T)
 XappSpam <- spam[,3:58]
 zappSpam <- spam$Z
+
+compSpam = princomp(XappSpam)
+acpSpam = as.data.frame(compSpam$scores[,c(1:10)])
+
 quadraticVariablesSpam <- get.best.variables(cbind(XappSpam,Z = zappSpam),8)
 resSpam <- protocole2(XappSpam,zappSpam,quadraticVariablesSpam)
+
+quadraticVariablesSpamAcp <- get.best.variables(cbind(acpSpam,Z = zappSpam),8)
+resSpamAcp <- protocole2(acpSpam,zappSpam,quadraticVariablesSpamAcp)
+
+covSpam <- cov(XappSpam)
+subCovSpam <- check.cov(cbind(XappSpam,Z = zappSpam))$same
+corSpam <- cor(XappSpam)
+
+normSpam <- check.normality(spam)
 
 plot(prcomp(XappSpam[3:54])$x[,1], prcomp(XappSpam[3:54])$x[,2], col=c("red", "blue")[zappSpam])
 
@@ -103,8 +119,21 @@ resSpam$sd
 spam2 <- read.csv("data/spambase2.csv", header=T)
 XappSpam2 <- spam2[,3:58]
 zappSpam2 <- spam2$Z
+
+compSpam2 = princomp(XappSpam2)
+acpSpam2 = as.data.frame(compSpam2$scores[,c(1:10)])
+
 quadraticVariablesSpam2 <- get.best.variables(cbind(XappSpam2,Z = zappSpam2),8)
 resSpam2 <- protocole2(XappSpam2,zappSpam2,quadraticVariablesSpam2)
+
+quadraticVariablesSpam2Acp <- get.best.variables(cbind(acpSpam2,Z = zappSpam),8)
+resSpamAcp2 <- protocole2(acpSpam2,zappSpam2,quadraticVariablesSpam2Acp)
+
+covSpam2 <- cov(XappSpam2)
+subCovSpam2 <- check.cov(cbind(XappSpam2,Z = zappSpam))$same
+corSpam2 <- cor(XappSpam2)
+
+normSpam2 <- check.normality(spam2)
 
 plot(prcomp(XappSpam2)$x[,1], prcomp(XappSpam2)$x[,2], col=c("red", "blue")[zappSpam2])
 
