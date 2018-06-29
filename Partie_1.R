@@ -1,17 +1,24 @@
 library(e1071)
 library(MASS)
 library(fossil)
+
+#Fonction d'analyse
 source("functions/anadisc.R")
 source("functions/mvdnorm.R")
 source("functions/prob.ad.R")
 source("functions/tree.rpart.R")
 source("functions/prepare.R")
 source("functions/separ1.R")
-source("functions/check.normality.R")
 source("functions/distXY.R")
-source("functions/protocole2.R")
 source("functions/logistic.R")
+
+#Fonction principale
+
+source("functions/protocole2.R")
+
+#Fonctions secondaires pour éxplorer les données et selectionner les variables
 source("functions/seeDensity.R")
+source("functions/check.normality.R")
 source("functions/check.cov.R")
 source("functions/get.best.variables.R")
 
